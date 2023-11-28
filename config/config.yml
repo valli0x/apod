@@ -1,0 +1,17 @@
+version: "0.0"
+# apod api key
+apodkey: "rj9LSQPmAWkFpF7WHwiyBoe2s0smefB3geveOnWI"
+datapath: "data"
+# server configuration
+server:
+  address: "localhost:8080"
+# logger configuration
+logger:
+  serviceName: "apod"
+# storage configuration
+storage:
+  dbname: "worker"
+  host: "127.0.0.1"
+  port: "5432"
+  user: "root"
+  password: "root"
