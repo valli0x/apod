@@ -26,7 +26,7 @@ func NewServer(port string, metaStor *gorm.DB) *Server {
 func (s *Server) Start() error {
 	mux := http.NewServeMux()
 
-	mux.Handle("/v1/apod", s.apod())
+	mux.Handle("/v1/apod", s.apod()) // пока только получение метаданных
 
 	ln, err := net.Listen("tcp", s.port)
 	if err != nil {
