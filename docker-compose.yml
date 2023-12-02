@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   apodworker:
-    image:
+    image:  apodworker
     container_name: apod-worker
     environment:
       SERVICE_APODKEY: rj9LSQPmAWkFpF7WHwiyBoe2s0smefB3geveOnWI

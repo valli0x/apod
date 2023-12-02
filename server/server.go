@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net"
 	"net/http"
 	"strconv"
@@ -54,11 +53,13 @@ func (s *Server) apod() http.Handler {
 
 		var list bool
 		var err error
+
 		listStr := queryVals.Get("list")
 		if listStr != "" {
 			list, err = strconv.ParseBool(listStr)
 			if err != nil {
 				respondError(w, http.StatusBadRequest, nil)
+				return
 			}
 		}
 
@@ -67,13 +68,13 @@ func (s *Server) apod() http.Handler {
 		switch list {
 		case false:
 			apod := &model.APOD{}
-			fmt.Println(apod.Copyright)
 			result := s.metaStor.First(apod, "date = ?", dateStr)
 			if result.Error != nil || apod == nil {
 				respondError(w, http.StatusInternalServerError, nil)
 				return
 			}
 			respondOk(w, apod)
+			return
 		case true:
 			var apods []model.APOD
 			result := s.metaStor.First(&apods)
@@ -82,6 +83,7 @@ func (s *Server) apod() http.Handler {
 				return
 			}
 			respondOk(w, apods)
+			return
 		}
 
 	})

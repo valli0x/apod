@@ -11,9 +11,9 @@ import (
 
 	"github.com/hashicorp/go-uuid"
 	"github.com/hashicorp/vault/sdk/physical"
-	"github.com/mitchellh/mapstructure"
 	"github.com/rs/zerolog"
 	"github.com/valli0x/apod/model"
+	"github.com/valli0x/apod/worker/dataparser"
 	"gorm.io/gorm"
 )
 
@@ -32,7 +32,7 @@ func NewAPODjob(metaStor *gorm.DB, dataStor physical.Backend, logger *zerolog.Lo
 		apikey:   apikey,
 		logger:   logger,
 		client: &http.Client{
-			Timeout: time.Second * 10,
+			Timeout: time.Second * 30,
 		},
 	}
 }
@@ -45,7 +45,7 @@ func (a *APODjob) Execute() error {
 		return err
 	}
 	apod := &model.APOD{}
-	if err := mapstructure.Decode(metadata, apod); err != nil {
+	if err := dataparser.Decode(metadata, apod); err != nil {
 		return err
 	}
 	apod.IDData, err = uuid.GenerateUUID()

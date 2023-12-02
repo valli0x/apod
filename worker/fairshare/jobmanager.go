@@ -15,6 +15,10 @@ import (
 	"github.com/hashicorp/vault/sdk/helper/logging"
 )
 
+/*
+	Код из hashicorp vault для воркеров и объединения их в очереди, параллельного выполнения
+	в данном случае воркеры это job-ы имеющие 2 метода: выполнение и обработка ошибки.
+*/
 type JobManager struct {
 	name   string
 	queues map[string]*list.List
